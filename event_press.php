@@ -5,43 +5,67 @@
     Description: Plugin for creating, displaying, and sharing events. 
     Author: Benjamin Healey
     Author URI: www.cs.redeemer.ca/~bhealey
-    Version: 1.0
+    Version: 1.1
   */
+require_once dirname( __FILE__ ) . '/includes/ep-main.php';
+//bh_ep_main::actionHooks();
 
-register_activation_hook (__FILE__, 'bh_ep_install'); //on install, do stuff
-register_deactivation_hook (__FILE__, 'bh_ep_uninstall'); //uninstall action hook
+register_activation_hook (__FILE__, array ('bh_ep_main', 'bh_ep_install')); //on install, do stuff
+register_deactivation_hook (__FILE__, array ('bh_ep_main', 'bh_ep_uninstall')); //uninstall action hook
 
-function bh_ep_install(){
-//add default load in 
-	$bh_ep_options = array(); 
-	If (version_compare (get_bloginfo('version'), '4.3', '<')){ //version compare
-		deactivate_plugins(basename(__FILE__));//deactivate plugin
-}
-}
+add_action( 'init', 'bh_ep_event_post_type' );
 
-function bh_ep_uninstall(){
-	//deactivate code
-	deactivate_plugins(basename(__FILE__));//deactivate plugin
-}
-
-
-add_action('admin_menu', 'bh_ep_menu');
-
-function bh_ep_menu(){
-//custom menu 
-//what page is, Title, capability, slug, function(to be called), 
-add_menu_page('EventPress Page', 'EventPress', 'manage_options', __FILE__, 'bh_ep_settings_page', 'dashicons-mail');  
-
-//create submenu items
-	add_submenu_page( __FILE__, 'About EventPress', 'About', 'manage_options', __FILE__.'_about', bh_ep_about_page );
-	add_submenu_page( __FILE__, 'EventPress Settings', 'Settings', 'manage_options', __FILE__.'_settings', bh_ep_help_page );
-	add_submenu_page( __FILE__, 'Uinstall My Plugin', 'Uninstall', 'manage_options', __FILE__.'_uninstall', bh_ep_uninstall_page ); 
-}
-
-function bh_ep_about_page(){?> 
-	<h3>About</h3> 
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lorem tortor, commodo in purus eu, dapibus fermentum dui. Duis odio purus, dapibus vel dui in, congue imperdiet leo. Donec eleifend nibh et rhoncus facilisis. Duis luctus, turpis eu egestas elementum, urna dolor vehicula augue, quis aliquet velit metus a enim. Donec mattis ante diam, non ullamcorper nisi faucibus a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu posuere sem, at ultrices tellus. Aliquam varius sodales eros, sed pharetra arcu pretium vitae. Morbi dictum rutrum accumsan.</p>
-<?php
-}
+//create event post type 
+	function bh_ep_event_post_type(){
+		//array of arguments to be passed to register
+		
+		$capabilities = array(
+			'edit_post'          => 'edit_event', 
+  			'read_post'          => 'read_event', 
+  			'delete_post'        => 'delete_event', 
+ 			'edit_posts'         => 'edit_events', 
+  			'edit_others_posts'  => 'edit_others_events', 
+  			'publish_posts'      => 'publish_events',       
+  			'read_private_posts' => 'read_private_events', 
+  			'create_posts'       => 'edit_events',
+		);
+		
+		$labels = array(
+			'name'               => 'Events',
+			'singular_name'      => 'Event',
+			'menu_name'          => 'Events',
+			'name_admin_bar'     => 'Event',
+			'add_new'            => 'Add New Event',
+			'add_new_item'       => 'Add New Event' ,
+			'new_item'           => 'New Event',
+			'edit_item'          => 'Edit Event',
+			'view_item'          => 'View Event',
+			'all_items'          => 'All Events',
+			'search_items'       => 'Search Events',
+			'parent_item_colon'  => 'Parent Events:',
+			'not_found'          => 'No events found.',
+			'not_found_in_trash' => 'No events found in Trash.' 
+		);
+		$support = array(
+			'title',
+			'editor'
+		); 
+		$args = array(
+			'labels'             => $labels,
+                	'description'        => __( 'Description.'),
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true, //default UI 
+			'show_in_menu'       => true, //show it menu 
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'event' ),
+			'capability_type'    => $capabilities, //pass array of translated capabilities 
+			'has_archive'        => true,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'	     => $support
+		);
+		register_post_type('bh_ep_event', $args);
+	} 
 
 ?>
