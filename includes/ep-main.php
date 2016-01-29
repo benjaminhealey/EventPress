@@ -28,12 +28,12 @@ class bh_ep_main{
 	function bh_ep_menu(){
 		//custom menu 
 		//what page is, Title, capability, slug, function(to be called), 
-		add_menu_page('EventPress Page', 'EventPress', 'manage_options', __FILE__, 'bh_ep_settings_page', 'dashicons-mail');  
+		add_menu_page('EventPress Page', 'EventPress', 'manage_options', $title, 'bh_ep_settings_page', 'dashicons-mail');  
 
 		//create submenu items
-		add_submenu_page( __FILE__, 'About EventPress', 'About', 'manage_options', __FILE__.'_about', bh_ep_about_page );
-		add_submenu_page( __FILE__, 'EventPress Settings', 'Settings', 'manage_options', __FILE__.'_settings', bh_ep_help_page );
-		add_submenu_page( __FILE__, 'Uinstall My Plugin', 'Uninstall', 'manage_options', __FILE__.'_uninstall', bh_ep_uninstall_page ); 
+		add_submenu_page( __FILE__, 'About EventPress', 'About', 'manage_options', $title,'_about', bh_ep_about_page );
+		add_submenu_page( __FILE__, 'EventPress Settings', 'Settings', 'manage_options', __FILE__,'_settings', bh_ep_help_page );
+		add_submenu_page( __FILE__, 'Uinstall My Plugin', 'Uninstall', 'manage_options', __FILE__,'_uninstall', bh_ep_uninstall_page ); 
 	}
 	
 	
