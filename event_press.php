@@ -73,15 +73,22 @@ function bh_ep_add_event_info_metabox() {
         	__('Share'),
         	'bh_ep_render_send_metabox',
         	'bh_ep_event',
-        	'side',
+        	'normal',
         	'core'
     	);
 }
 function bh_ep_render_send_metabox( $post) {
-	
-	 ?>
+	if (get_post_status($post) == 'auto-draft' || get_post_status($post) == 'draft'){
+		$button_text = 'Publish and Share';
+	} else if (get_post_status($post) == 'publish'){
+		$button_text = 'Share';
+	} else {
+		$button_text = 'Cannot Share in this state';	
+	}	
 
-        <button onclick="" id="bh-ep-event-send">Share Event</button>
+	 ?>
+	
+        <button class="button button-large" onclick="" id="bh-ep-event-send"><?php _e($button_text); ?></button>
 <?php 
 }
 
