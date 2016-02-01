@@ -12,10 +12,10 @@ require_once dirname( __FILE__ ).'/includes/ep-main.php';
 register_activation_hook (__FILE__, array ('bh_ep_main', 'bh_ep_install')); //on install, do stuff
 register_deactivation_hook (__FILE__, array ('bh_ep_main', 'bh_ep_uninstall')); //uninstall action hook
 
-add_action( 'init', 'bh_ep_event_post_type' );
-add_action( 'add_meta_boxes', 'bh_ep_add_event_info_metabox' );
-add_action( 'save_post', 'bh_ep_save_event_info' );
-add_action('admin_menu', 'bh_ep_menu');
+add_action( 'init', 'bh_ep_event_post_type' ); //custom post type, bh_ep_event
+add_action( 'add_meta_boxes', 'bh_ep_add_event_info_metabox' ); //add info to custom post type 
+add_action( 'save_post', 'bh_ep_save_event_info' ); //save functionality for new info on bh_ep_event 
+add_action('admin_menu', 'bh_ep_menu'); //add menu 
 
 //create event post type 
 function bh_ep_event_post_type(){
@@ -60,20 +60,37 @@ function bh_ep_event_post_type(){
 	register_post_type('bh_ep_event', $args);
 } 
 function bh_ep_add_event_info_metabox() {
-    add_meta_box(
-        'bh-ep-event-info-metabox',
-        __('Event Info'),
-        'bh_ep_render_event_info_metabox',
-        'bh_ep_event',
-        'side',
-        'core'
-    );
+    	add_meta_box(
+       		'bh-ep-event-info-metabox',
+        	__('Event Info'),
+        	'bh_ep_render_event_info_metabox',
+        	'bh_ep_event',
+        	'side',
+        	'core'
+    	);
+   	add_meta_box(
+       		'bh-ep-send-metabox',
+        	__('Share'),
+        	'bh_ep_render_send_metabox',
+        	'bh_ep_event',
+        	'side',
+        	'core'
+    	);
 }
+function bh_ep_render_send_metabox( $post) {
+	
+	 ?>
+
+        <button onclick="" id="bh-ep-event-send">Share Event</button>
+<?php 
+}
+
 function bh_ep_render_event_info_metabox( $post ) {
     // generate a nonce field
+    //ensures info comes from current site 
     wp_nonce_field( basename( __FILE__ ), 'bh-ep-event-info-nonce' );
  
-    // get previously saved meta values (if any)
+    // check for previously saved event data
     $event_start_date = get_post_meta( $post->ID, 'event-start-date', true );
     $event_end_date = get_post_meta( $post->ID, 'event-end-date', true );
     $event_venue = get_post_meta( $post->ID, 'event-venue', true );
@@ -86,10 +103,10 @@ function bh_ep_render_event_info_metabox( $post ) {
  
     ?>
 <label for="bh-ep-event-start-date"><?php _e( 'Event Start Date:' ); ?></label>
-        <input class="widefat bh-ep-event-date-input" id="bh-ep-event-start-date" type="text" name="bh-ep-event-start-date" placeholder="Format: February 18, 2014" value="<?php echo date( 'F d, Y', $event_start_date ); ?>" />
+        <input class="widefat bh-ep-event-date-input" id="bh-ep-event-start-date" type="text" name="bh-ep-event-start-date" placeholder="Format: May 17, 1994" value="<?php echo date( 'F d, Y', $event_start_date ); ?>" />
  
 <label for="bh-ep-event-end-date"><?php _e( 'Event End Date:'); ?></label>
-        <input class="widefat bh-ep-event-date-input" id="bh-ep-event-end-date" type="text" name="bh-ep-event-end-date" placeholder="Format: February 18, 2014" value="<?php echo date( 'F d, Y', $event_end_date ); ?>" />
+        <input class="widefat bh-ep-event-date-input" id="bh-ep-event-end-date" type="text" name="bh-ep-event-end-date" placeholder="Format: May 17, 1994" value="<?php echo date( 'F d, Y', $event_end_date ); ?>" />
  
 <label for="bh-ep-event-venue"><?php _e( 'Event Venue:'); ?></label>
         <input class="widefat" id="bh-ep-event-venue" type="text" name="bh-ep-event-venue" placeholder="eg. Times Square" value="<?php echo $event_venue; ?>" />
