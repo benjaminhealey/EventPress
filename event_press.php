@@ -109,12 +109,14 @@ function bh_ep_render_event_info_metabox( $post ) {
     $event_end_date = ! empty( $event_end_date ) ? $event_end_date : $event_start_date;
  
     ?>
+	<!-- change to select, drop-down menus  -->
 <label for="bh-ep-event-start-date"><?php _e( 'Event Start Date:' ); ?></label>
         <input class="widefat bh-ep-event-date-input" id="bh-ep-event-start-date" type="text" name="bh-ep-event-start-date" placeholder="Format: May 17, 1994" value="<?php echo date( 'F d, Y', $event_start_date ); ?>" />
- 
+ 	<!-- change to select, drop down menus  -->
 <label for="bh-ep-event-end-date"><?php _e( 'Event End Date:'); ?></label>
         <input class="widefat bh-ep-event-date-input" id="bh-ep-event-end-date" type="text" name="bh-ep-event-end-date" placeholder="Format: May 17, 1994" value="<?php echo date( 'F d, Y', $event_end_date ); ?>" />
- 
+ 	<!-- change to select, list of regions  -->
+	<!-- add location variable, address -->
 <label for="bh-ep-event-venue"><?php _e( 'Event Venue:'); ?></label>
         <input class="widefat" id="bh-ep-event-venue" type="text" name="bh-ep-event-venue" placeholder="eg. Times Square" value="<?php echo $event_venue; ?>" />
 <?php 
@@ -161,6 +163,7 @@ function bh_ep_menu(){
 }
 
 function bh_ep_settings(){ ?>
+
 <form action="">
 <fieldset>
 <h4>Personal information:</h4>
