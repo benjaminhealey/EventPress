@@ -48,7 +48,7 @@ function bh_ep_event_post_type(){
 		'publicly_queryable' => true,
 		'show_ui'            => true, //default UI 
 		'show_in_menu'       => true, //show in menu 
-		'query_var'          => true,
+		'query_var'          => "event",
 		'menu_icon' 	     => 'dashicons-calendar-alt',
 		'rewrite'            => array( 'slug' => 'event' ),
 		//'capability_type'    => $capabilities, //pass array of translated capabilities 
