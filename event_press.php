@@ -17,6 +17,8 @@ add_action( 'add_meta_boxes', 'bh_ep_add_event_info_metabox' ); //add info to cu
 add_action( 'save_post', 'bh_ep_save_event_info' ); //save functionality for new info on bh_ep_event 
 add_action('admin_menu', 'bh_ep_menu'); //add menu 
 
+//IMPORT SHARE JavaScript File 
+
 //create event post type 
 function bh_ep_event_post_type(){
 	//array of arguments to be passed to register
@@ -87,9 +89,13 @@ function bh_ep_render_send_metabox( $post) {
 	}	
 
 	 ?>
-	
+	<!-- on click call JQeury function   -->
         <button class="button button-large" onclick="" id="bh-ep-event-send"><?php _e($button_text); ?></button>
 <?php 
+	//JQuery Function goes here 
+	//create JSON 
+	// .post(); JSON to server 
+		//create Urbanicity page as server 
 }
 
 function bh_ep_render_event_info_metabox( $post ) {
@@ -104,8 +110,8 @@ function bh_ep_render_event_info_metabox( $post ) {
  
     // if there is previously saved value then retrieve it, else set it to the current time
     $event_start_date = ! empty( $event_start_date ) ? $event_start_date : time();
- 
-    //we assume that if the end date is not present, event ends on the same day
+ 	//add checks, only publishable if criteria met 
+    // if the end date is not present event ends on the same day
     $event_end_date = ! empty( $event_end_date ) ? $event_end_date : $event_start_date;
  
     ?>
@@ -156,13 +162,16 @@ function bh_ep_save_event_info( $post_id ) {
 
 function bh_ep_menu(){
 	//custom menu 
-	//what page is, Title, capability, slug, function(to be called), 
+	//what page is, Title, capability, slug, function (to be called), 
 	add_menu_page('EventPress Page', 'EventPress', 'manage_options', __FILE__. 'bh_ep_settings', 'bh_ep_settings'); 
 	//create submenu items
 	add_submenu_page( __FILE__, 'Uinstall My Plugin', 'Uninstall', 'manage_options', __FILE__.'_uninstall', 'bh_ep_uninstall_page'); 
 }
 
-function bh_ep_settings(){ ?>
+function bh_ep_settings(){ 
+//change all of this 
+//visual components options 
+?>
 
 <form action="">
 <fieldset>
