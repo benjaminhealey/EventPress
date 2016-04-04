@@ -16,9 +16,11 @@ add_action( 'init', 'bh_ep_event_post_type' ); //custom post type, bh_ep_event
 add_action( 'add_meta_boxes', 'bh_ep_add_event_info_metabox' ); //add info to custom post type 
 add_action( 'save_post', 'bh_ep_save_event_info' ); //save functionality for new info on bh_ep_event 
 add_action('admin_menu', 'bh_ep_menu'); //add menu 
-
+add_action('init', 'import_script'); 
 //IMPORT SHARE JavaScript File 
-
+function import_script(){
+	wp_enqueue_script('script', plugins_url('js/send.js', __FILE__), array('jquery'));
+}
 //create event post type 
 function bh_ep_event_post_type(){
 	//array of arguments to be passed to register
@@ -90,14 +92,27 @@ function bh_ep_render_send_metabox( $post) {
 
 	 ?>
 	<!-- on click call JQeury function   -->
-        <button class="button button-large" onclick="" id="bh-ep-event-send"><?php _e($button_text); ?></button>
+	<p id="state">Not Sent</p>
+        <button class="button button-large" onclick="sendEvent()" id="bh-ep-event-send"><?php _e($button_text); ?></button>
+<script>
+function sendEvent() {
+	var posting = $.post('http://cs.redeemer.ca/~bhealey/wp-content/plugins/event_press/includes/test.asp', "foo");
+	document.getElementById("state").innerHTML = posting; 
+}
+</script>
+	
 <?php 
 	//JQuery Function goes here 
 	//create JSON 
 	// jQuery.post(); JSON to server 
 		//create Urbanicity page as server 
 }
-
+function sendEvent ($post){ 
+//var posting = $.post( url, { $post } );
+//<script type="text/javascript"> 
+jQuery.post('http://cs.redeemer.ca/~bhealey/wp-content/plugins/event_press/includes/receive.php', $post); 
+//</script>
+}
 function bh_ep_render_event_info_metabox( $post ) {
     // generate a nonce field
     //ensures info comes from current site 
