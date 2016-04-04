@@ -94,7 +94,7 @@ function bh_ep_render_send_metabox( $post) {
 <?php 
 	//JQuery Function goes here 
 	//create JSON 
-	// .post(); JSON to server 
+	// jQuery.post(); JSON to server 
 		//create Urbanicity page as server 
 }
 
@@ -164,8 +164,6 @@ function bh_ep_menu(){
 	//custom menu 
 	//what page is, Title, capability, slug, function (to be called), 
 	add_menu_page('EventPress Page', 'EventPress', 'manage_options', __FILE__. 'bh_ep_settings', 'bh_ep_settings'); 
-	//create submenu items
-	add_submenu_page( __FILE__, 'Uinstall My Plugin', 'Uninstall', 'manage_options', __FILE__.'_uninstall', 'bh_ep_uninstall_page'); 
 }
 
 function bh_ep_settings(){ 
