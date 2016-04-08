@@ -55,7 +55,6 @@ function bh_ep_event_post_type(){
 		'query_var'          => "event",
 		'menu_icon' 	     => 'dashicons-calendar-alt',
 		'rewrite'            => array( 'slug' => 'event' ),
-		//'capability_type'    => $capabilities, //pass array of translated capabilities 
 		'has_archive'        => true,
 		'hierarchical'       => false,
 		'menu_position'      => null,
@@ -96,23 +95,16 @@ function bh_ep_render_send_metabox( $post) {
         <button class="button button-large" onclick="sendEvent()" id="bh-ep-event-send"><?php _e($button_text); ?></button>
 <script>
 function sendEvent() {
+	//foo for testing, "test.asp" for testing 
 	var posting = $.post('http://cs.redeemer.ca/~bhealey/wp-content/plugins/event_press/includes/test.asp', "foo");
 	document.getElementById("state").innerHTML = posting; 
 }
 </script>
-	
 <?php 
-	//JQuery Function goes here 
-	//create JSON 
 	// jQuery.post(); JSON to server 
 		//create Urbanicity page as server 
 }
-function sendEvent ($post){ 
-//var posting = $.post( url, { $post } );
-//<script type="text/javascript"> 
-jQuery.post('http://cs.redeemer.ca/~bhealey/wp-content/plugins/event_press/includes/receive.php', $post); 
-//</script>
-}
+
 function bh_ep_render_event_info_metabox( $post ) {
     // generate a nonce field
     //ensures info comes from current site 
